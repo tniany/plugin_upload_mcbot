@@ -66,9 +66,13 @@ class MyPlugin(Star):
             delay_max = args[4] if len(args) > 4 else "5000"
             prefix = args[5] if len(args) > 5 else "ys_"
 
-            await self.start_test(event, server, count, delay_min, delay_max, prefix)
+            # 调用 start_test 方法并迭代其结果
+            async for result in self.start_test(event, server, count, delay_min, delay_max, prefix):
+                yield result
         elif sub_command == "stop":
-            await self.stop_test(event)
+            # 调用 stop_test 方法并迭代其结果
+            async for result in self.stop_test(event):
+                yield result
         else:
             yield event.plain_result("未知子指令，使用方法：/bot start <服务器地址> <假人数量> 或 /bot stop")
 
