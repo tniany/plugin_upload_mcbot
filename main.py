@@ -41,7 +41,18 @@ class MyPlugin(Star):
             yield event.plain_result("使用方法：/bot start <服务器地址> <假人数量> 或 /bot stop")
             return
 
-        sub_command = args[0]
+        # 检查第一个参数是否是 'start' 或 'stop'
+        # 处理可能的情况：args[0] 是 'bot' 或者直接是 'start'/'stop'
+        if args[0] == "bot":
+            # 如果第一个参数是 'bot'，则第二个参数应该是子命令
+            if len(args) < 2:
+                yield event.plain_result("使用方法：/bot start <服务器地址> <假人数量> 或 /bot stop")
+                return
+            sub_command = args[1]
+            # 调整参数索引
+            args = args[1:]
+        else:
+            sub_command = args[0]
         
         if sub_command == "start":
             if len(args) < 3:
