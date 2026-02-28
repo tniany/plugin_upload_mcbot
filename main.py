@@ -23,13 +23,16 @@ class MyPlugin(Star):
             return
 
         message_str = event.message_str
+        logger.info(f"Received message_str: '{message_str}'")
         args = message_str.split()
+        logger.info(f"Parsed args: {args}")
 
         if len(args) < 1:
             yield event.plain_result("使用方法：/bot start <服务器地址> <假人数量> [延迟最小值] [延迟最大值] [前缀] 或 /bot stop")
             return
 
         sub_command = args[0]
+        logger.info(f"Sub command: '{sub_command}'")
 
         if sub_command == "start":
             if len(args) < 3:
