@@ -28,7 +28,7 @@ class MyPlugin(Star):
         logger.info(f"Parsed args: {args}")
 
         if len(args) < 1:
-            yield event.plain_result("使用方法：/bot start <服务器地址> <假人数量> [延迟最小值] [延迟最大值] [前缀] 或 /bot stop")
+            yield event.plain_result("使用方法：/bot start <服务器地址> <假人数量> 或 /bot stop")
             return
 
         sub_command = args[0]
@@ -36,7 +36,7 @@ class MyPlugin(Star):
 
         if sub_command == "start":
             if len(args) < 3:
-                yield event.plain_result("启动测试参数不足，使用方法：/bot start <服务器地址> <假人数量> [延迟最小值] [延迟最大值] [前缀]")
+                yield event.plain_result("启动测试参数不足，使用方法：/bot start <服务器地址> <假人数量>")
                 return
 
             server = args[1]
@@ -50,7 +50,7 @@ class MyPlugin(Star):
         elif sub_command == "stop":
             await self.stop_test(event)
         else:
-            yield event.plain_result("未知子指令，使用方法：/bot start <服务器地址> <假人数量> [延迟最小值] [延迟最大值] [前缀] 或 /bot stop")
+            yield event.plain_result("未知子指令，使用方法：/bot start <服务器地址> <假人数量> 或 /bot stop")
 
     async def start_test(self, event: AstrMessageEvent, server, count, delay_min, delay_max, prefix):
         """启动测试"""
