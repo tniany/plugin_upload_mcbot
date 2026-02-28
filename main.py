@@ -16,7 +16,7 @@ class MyPlugin(Star):
     # 注册指令的装饰器。指令名为 bot。注册成功后，发送 `/bot` 就会触发这个指令
     @filter.command("bot")
     async def bot(self, event: AstrMessageEvent):
-        """mcbot 假人压测指令，仅管理员可用。使用方法：/bot start <服务器地址> <假人数量> [延迟最小值] [延迟最大值] [前缀] 或 /bot stop"""
+        """mcbot 假人压测指令，仅管理员可用。使用方法：/bot start <服务器地址> <假人数量> 或 /bot stop"""
         # 检查是否为管理员
         if not event.is_admin():
             yield event.plain_result("权限不足，仅管理员可使用此指令")
@@ -27,14 +27,13 @@ class MyPlugin(Star):
         args = message_str.split()
         logger.info(f"Parsed args: {args}")
 
+        # 处理命令解析
         if len(args) < 1:
             yield event.plain_result("使用方法：/bot start <服务器地址> <假人数量> 或 /bot stop")
             return
 
-        sub_command = args[0]
-        logger.info(f"Sub command: '{sub_command}'")
-
-        if sub_command == "start":
+        # 检查第一个参数是否是 'start' 或 'stop'
+        if args[0] == "start":
             if len(args) < 3:
                 yield event.plain_result("启动测试参数不足，使用方法：/bot start <服务器地址> <假人数量>")
                 return
@@ -47,7 +46,7 @@ class MyPlugin(Star):
             prefix = args[5] if len(args) > 5 else "ys_"
 
             await self.start_test(event, server, count, delay_min, delay_max, prefix)
-        elif sub_command == "stop":
+        elif args[0] == "stop":
             await self.stop_test(event)
         else:
             yield event.plain_result("未知子指令，使用方法：/bot start <服务器地址> <假人数量> 或 /bot stop")
