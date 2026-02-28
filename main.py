@@ -28,7 +28,7 @@ class MyPlugin(Star):
         """
         # 检查是否为管理员
         if not event.is_admin():
-            yield event.plain_result("权限不足，仅管理员可使用此指令")
+            # 无权限时不回复
             return
 
         message_str = event.message_str
